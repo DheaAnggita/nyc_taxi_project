@@ -1,0 +1,31 @@
+{{
+    config(
+        materialized='table',
+        unique_key='surrogate_key'
+    )
+}}
+
+SELECT
+    surrogate_key,
+    vendorid,
+    tpep_pickup_datetime,
+    tpep_dropoff_datetime,
+    pickup_date,
+    pickup_hour,
+    passenger_count,
+    trip_distance,
+    rate_code_id,
+    pu_location_id,
+    do_location_id,
+    pu_zone,
+    do_zone,
+    pu_borough, 
+    do_borough, 
+    payment_type,
+    fare_amount,
+    tip_amount,
+    total_amount,
+    trip_duration_sec,
+    trip_speed_mph,   
+    trip_category     
+FROM {{ ref('int_trips_enhanced') }}

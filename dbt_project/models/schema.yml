@@ -1,0 +1,74 @@
+version: 2
+
+sources:
+  - name: raw
+    schema: main
+    tables:
+      - name: trips_raw
+      - name: taxi_zone_lookup
+
+models:
+  - name: stg_taxi_trips
+    description: "Staging table untuk data perjalanan taksi NYC"
+    columns:
+      - name: surrogate_key
+        tests:
+          - not_null
+          - unique
+      - name: pu_location_id
+        tests:
+          - not_null
+      - name: do_location_id
+        tests:
+          - not_null
+
+  - name: stg_taxi_zones
+    description: "Staging data zona taksi dari lookup CSV"
+    columns:
+      - name: location_id
+        tests:
+          - not_null
+          - unique
+      - name: borough
+        tests:
+          - accepted_values:
+              values: ['Bronx', 'Brooklyn', 'EWR', 'Manhattan', 'Queens', 'Staten Island', 'Unknown']
+
+  - name: fct_trips
+    description: "Fakta utama semua perjalanan dengan metrik turunan dan kunci asing."
+    columns:
+      - name: surrogate_key
+        tests:
+          - not_null
+          - unique
+      - name: pu_location_id
+        tests:
+          - relationships:
+              to: ref('dim_zones')
+              field: location_id
+      - name: do_location_id
+        tests:
+          - relationships:
+              to: ref('dim_zones')
+              field: location_id
+      - name: total_amount
+        tests:
+          - not_null
+
+  - name: dim_zones
+    description: "Dimensi zona lokasi taksi dengan hierarki."
+    columns:
+      - name: location_id
+        tests:
+          - not_null
+          - unique
+
+  - name: agg_daily_stats
+    description: "Ringkasan metrik harian untuk performa dashboard."
+    columns:
+      - name: day
+        tests:
+          - not_null
+          - unique
+      - name: trips 
+      - name: revenue 

@@ -1,0 +1,13 @@
+name: 'nyc_taxi'
+version: '1.0'
+config-version: 2
+
+profile: 'nyc_taxi'
+
+model-paths: ["models"]
+seed-paths: ["data"] 
+macro-paths: ["macros"]
+
+models:
+  nyc_taxi:
+    +materialized: view

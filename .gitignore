@@ -1,0 +1,23 @@
+# Python
+venv/
+__pycache__/
+*.pyc
+
+# Airflow
+airflow_home/
+airflow.cfg
+airflow.db
+*.log
+
+# Data
+data/
+*.parquet
+
+# dbt
+dbt_project/target/
+dbt_project/logs/
+dbt_project/dbt_packages/
+dbt_project/*.db
+dbt_project/nyc_taxi.duckdb
+nyc_taxi.duckdb
+dbt_project/nyc_taxi/

@@ -1,0 +1,8 @@
+apache-airflow
+dbt-duckdb
+pandas
+requests
+streamlit
+plotly
+numpy
+SQLAlchemy>=1.4 
